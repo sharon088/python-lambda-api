@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Lambda Functions API</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00bfff, 0 0 50px #ff00ff, 0 0 60px #ff1493;
+            margin-bottom: 20px;
+        }
+    
+        .api-box {
+            background: #2d2d2d;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 191, 255, 0.7), 0 0 30px rgba(138, 43, 226, 0.7), 0 0 40px rgba(255, 20, 147, 0.7);
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+    
+        .api-box h2 {
+            color: #00ffff;
+            margin-top: 0;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00bfff, 0 0 50px #ff00ff, 0 0 60px #ff1493;
+            margin-bottom: 20px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #00bfff;
+        }
+    
+        input, textarea, button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff1493;
+            background: #333333;
+            color: #ffffff;
+            font-size: 14px;
+        }
+    
+        button {
+            cursor: pointer;
+            background-color: #ff00ff;
+            color: #1c1c1c;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            padding: 12px;
+        }
+    
+        button:hover {
+            background-color: #ff1493;
+        }
+    
+        #response, #upload-response, #wikipedia-response {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    
+        #wikipedia-download-button {
+            background-color: #ff00ff;
+            color: #1c1c1c;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #wikipedia-download-button:hover {
+            background-color: #ff1493;
+        }
+
+        #wikipedia-response p {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #5a2dff;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0;
+        }
+    </style> 
+</head>
+<body>
+    <div>
+        <h1>Python Lambda Functions API</h1>
+
+         <!-- Telegram Message API Box -->
+        <div class="api-box">
+            <h2>Send Telegram Messages</h2>
+            <form action="/send-message" method="post">
+                <label for="contacts">Enter Contact IDs (comma-separated):</label>
+                <input type="text" id="contacts" name="contacts" placeholder="e.g., 123456789,987654321" required>
+                <label for="message">Enter Your Message:</label>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+                <button type="submit">Send Messages</button>
+            </form>
+            <div id="response"></div>
+        </div>
+
+        <!-- CSV Upload and Conversion API Box -->
+        <div class="api-box">
+            <h2>Upload CSV to S3 and Download Excel</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <label for="csv-file">Upload CSV File:</label>
+                <input type="file" id="csv-file" name="csv-file" accept=".csv" required>
+                <button type="submit">Upload and Convert</button>
+            </form>
+            <div id="upload-response"></div>
+            <div id="download-section">
+                <h3>Converted Excel File:</h3>
+                <a id="download-link" href="#" target="_blank">Download Excel File</a>
+            </div>
+        </div>
+
+        <!-- Wikipedia Topic API Box -->
+        <div class="api-box">
+            <h2>Get Wikipedia Topic Summary</h2>
+            <form id="wikipedia-form">
+                <label for="topic">Enter Wikipedia Topic:</label><br>
+                <input type="text" id="topic" name="topic" required><br><br>
+                <button type="submit">Fetch Wikipedia Summary</button>
+            </form>
+            <div id="wikipedia-response"></div>
+            <div id="wikipedia-download-section" style="display:none;">
+                <h3>Download Wikipedia Summary:</h3>
+                <button id="wikipedia-download-button" onclick="window.open('#', '_blank')">Download Wikipedia Summary</button>
+            </div>
+        </div>
+
+        <!-- File Backup API Box -->
+        <div class="api-box">
+            <h2>Upload File to Backup</h2>
+            <form id="backup-form" enctype="multipart/form-data">
+                <label for="backup-file">Select a File:</label>
+                <input type="file" id="backup-file" name="backup-file" required>
+                <button type="submit">Upload to Backup</button>
+            </form>
+            <div id="backup-response"></div>
+        </div>
+
+        <!-- Create GitLab Project API Box -->
+        <div class="api-box">
+            <h2>Create GitLab Project</h2>
+            <form id="create-project-form">
+                <label for="project-name">Enter Project Name:</label>
+                <input type="text" id="project-name" name="project-name" placeholder="e.g., MyProject" required>
+                <button type="submit">Create Project</button>
+            </form>
+            <div id="create-project-response"></div>
+        </div>
+
+        <!-- Create GitLab User API Box -->
+        <div class="api-box">
+            <h2>Create GitLab User</h2>
+            <form id="create-user-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Full Name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="GitLab Username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Create User</button>
+            </form>
+            <div id="create-user-response"></div>
+        </div>
+    </div>
+
+    <script>
+        // Telegram message
+        document.querySelector('form[action="/send-message"]').onsubmit = async function(event) {
+            event.preventDefault();
+            const contacts = document.getElementById('contacts').value.split(',');
+            const message = document.getElementById('message').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Sending messages...';
+            const response = await fetch('/send-message', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    contacts: contacts,
+                    message: message
+                })
+            });
+            const result = await response.json();
+            if (response.ok) {
+                responseDiv.innerHTML = `<p style="color: white;">${result.message}</p>`;
+            } else {
+                responseDiv.innerHTML = `<p style="color: red;">Error: ${result.message}</p>`;
+            }
+        };
+
+        // CSV to Excel
+        document.getElementById('upload-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('csv-file');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            formData.append('csv-file', fileInput.files[0]);
+            const uploadResponse = document.getElementById('upload-response');
+            uploadResponse.innerHTML = 'Uploading and converting...';
+            try {
+                const response = await fetch('/upload-csv', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    uploadResponse.innerHTML = `<p style="color: white;">${result.message}</p>`;
+                    const downloadLink = document.getElementById('download-link');
+                    downloadLink.href = result.download_url;
+                    document.getElementById('download-section').style.display = 'block';
+                } else {
+                    uploadResponse.innerHTML = `<p style="color: red;">Error: ${result.message}</p>`;
+                }
+            } catch (error) {
+                uploadResponse.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        };
+
+        // Wikipedia topic fetching
+        document.getElementById('wikipedia-form').onsubmit = async function(event) {
+            event.preventDefault();         
+            const topic = document.getElementById('topic').value;
+            const responseDiv = document.getElementById('wikipedia-response');
+            const downloadSection = document.getElementById('wikipedia-download-section');
+            const downloadButton = document.getElementById('wikipedia-download-button');          
+            responseDiv.innerHTML = 'Fetching Wikipedia summary...';               
+            try {
+                const response = await fetch('/wikipedia', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ topic })
+                });
+                const result = await response.json();            
+                if (response.ok) {
+                    responseDiv.innerHTML = `<p style="color: white;">Summary fetched successfully!</p>`;
+                    downloadSection.style.display = 'block';
+                    downloadButton.onclick = () => window.open(result.download_url, '_blank');
+                } else {
+                    responseDiv.innerHTML = `<p style="color: red;">Error: ${result.message || 'Unknown error'}</p>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        };
+
+        // Files backups
+        document.getElementById('backup-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const fileInput = document.getElementById('backup-file');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to upload.');
+                return;
+            }
+            formData.append('backup-file', fileInput.files[0]);
+            const backupResponse = document.getElementById('backup-response');
+            backupResponse.innerHTML = 'Uploading file to backup...';
+            try {
+                const response = await fetch('/upload-backup', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    backupResponse.innerHTML = `<p style="color: white;">${result.message}</p><a href="${result.file_url}" target="_blank">Download File</a>`;
+                } else {
+                    backupResponse.innerHTML = `<p style="color: red;">Error: ${result.message}</p>`;
+                }
+            } catch (error) {
+                backupResponse.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        };
+
+        // Create GitLab Project
+        document.getElementById('create-project-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const projectName = document.getElementById('project-name').value;
+            const responseDiv = document.getElementById('create-project-response');
+            responseDiv.innerHTML = 'Creating project...';
+
+            try {
+                const response = await fetch('/create-project', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ project_name: projectName })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    responseDiv.innerHTML = `
+                        <p style="color: white;">${result.message}</p>
+                        <a href="${result.details.project_url}" target="_blank">View Project</a>
+                        <h3>Instructions to Open the Project Locally in VS Code:</h3>
+                        <ol style="color: white; text-align: left;">
+                            <li>Clone the repository to your local machine:</li>
+                            <pre style="background: #333; color: #0f0; padding: 10px;">git clone ${result.details.repository_url}</pre>
+                            <li>Navigate to the project folder:</li>
+                            <pre style="background: #333; color: #0f0; padding: 10px;">cd ${projectName}</pre>
+                            <li>Open the project in VS Code:</li>
+                            <pre style="background: #333; color: #0f0; padding: 10px;">code .</pre>
+                        </ol>`;
+                } else {
+                    responseDiv.innerHTML = `<p style="color: red;">Error: ${result.message}</p>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        };
+
+        // Create GitLab User
+        document.getElementById('create-user-form').onsubmit = async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const responseDiv = document.getElementById('create-user-response');
+            responseDiv.innerHTML = 'Creating user...';
+            try {
+                const response = await fetch('/create-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, username, password })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    responseDiv.innerHTML = `<p style="color: white;">${result.message}</p>`;
+                } else {
+                    responseDiv.innerHTML = `<p style="color: red;">Error: ${result.message}</p>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+boto3==1.35.71
+python-csv==0.0.13
+requests==2.32.3
+XlsxWriter==3.2.0

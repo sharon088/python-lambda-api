@@ -1,0 +1,14 @@
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "tasty-kfc-bucket"
+        },
+        "object": {
+          "key": "files_to_backup/wikipedia.txt"
+        }
+      }
+    }
+  ]
+}

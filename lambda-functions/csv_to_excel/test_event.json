@@ -1,0 +1,14 @@
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "tasty-kfc-bucket"
+        },
+        "object": {
+          "key": "csv/sample.csv"
+        }
+      }
+    }
+  ]
+}

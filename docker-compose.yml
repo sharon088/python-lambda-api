@@ -1,0 +1,36 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      JENKINS_OPTS: --prefix=/jenkins
+    restart: unless-stopped
+
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: gitlab.local
+    environment:
+      GITLAB_OMNIBUS_CONFIG: external_url 'http://gitlab.local'
+    ports:
+      - "9090:80"
+      - "443:443"
+      - "2222:22"
+    volumes:
+      - gitlab_data:/var/opt/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_config:/etc/gitlab
+    restart: always
+
+volumes:
+  jenkins_home:
+    driver: local
+  gitlab_data:
+  gitlab_logs:
+  gitlab_config:
